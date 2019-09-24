@@ -20,9 +20,7 @@ LOG_LEVEL = 'DEBUG'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64)'\
-                'AppleWebKit/537.36 (KHTML, like Gecko)'\
-                'snap Chromium/76.0.3809.100 Chrome/76.0.3809.100 Safari/537.36'
+USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64; rv:45.0) Gecko/20100101 Thunderbird/45.8.0'
 
 
 # Obey robots.txt rules
