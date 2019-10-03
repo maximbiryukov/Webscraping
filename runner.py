@@ -1,4 +1,4 @@
-from jobparser.spiders.avito import AvitoSpider
+from jobparser.spiders.avito import AvitoSpider, AvitoRealtySpider
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -19,5 +19,6 @@ if __name__ == '__main__':
     # process.crawl(hh_spider)
     # process.crawl(superjob_spider)
     # process.crawl(InstagramSpider, ['pestrova'], INST_LOGIN, INST_PWD)
-    process.crawl(AvitoSpider)
+    # process.crawl(AvitoSpider)
+    process.crawl(AvitoRealtySpider)
     process.start()

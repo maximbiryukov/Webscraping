@@ -1,14 +1,10 @@
-# -*- coding: utf-8 -*-
-
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
 from database.base import VacanciesDB
 from database.models import Vacancies
 from pymongo import MongoClient
-
+from pymongo import MongoClient
+import scrapy
+from scrapy.pipelines.images import ImagesPipeline
 
 class JobparserPipeline(object):
 
@@ -26,4 +22,18 @@ class JobparserPipeline(object):
         db_item = Vacancies(name=item.get('name'), spider=spider.name, url=item.get('url'),
                             employer=item.get('employer'), salary=item.get('salary'))
         self.sql_db.add_row(db_item)
+        return item
+
+class AvitoPhotosPipelines(ImagesPipeline):
+    def get_media_requests(self, item, info):
+        if item['photos']:
+            for img in item['photos']:
+                try:
+                    yield scrapy.Request(img)
+                except TypeError:
+                    pass
+
+    def item_completed(self, results, item, info):
+        if results:
+            item['photos'] = [itm[1] for itm in results if itm[0]]
         return item
