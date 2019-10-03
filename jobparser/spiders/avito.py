@@ -43,7 +43,7 @@ class AvitoRealtySpider(scrapy.Spider):
         try:
             pages_num = int(re.findall(r'[?=p]\w+', response.xpath('//div[contains(@class,"pagination")]/a/@href').extract()[-1])[1][1:])
             if pages_num:
-                for i in range(1, 3):
+                for i in range(1, page_num + 1):
                     yield response.follow(f'{self.start_urls[0]}?p={i}', callback=self.page_parse)
         except IndexError:
             yield response.follow(self.start_urls[0], callback=self.page_parse)
