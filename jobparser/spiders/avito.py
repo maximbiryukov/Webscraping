@@ -15,7 +15,7 @@ class AvitoSpider(scrapy.Spider):
         try:
             pages_num = int(response.xpath('//div[contains(@class,"pagination")]/a/text()').extract()[-1])
             if pages_num:
-                for i in range(2, pages_num + 1):
+                for i in range(1, pages_num + 1):
                     yield response.follow(f'/rossiya/vakansii?p={i}&amp;q={self.query}', callback=self.get_vacancies)
         except IndexError:
             yield response.follow(self.start_urls[0], callback=self.get_vacancies)
