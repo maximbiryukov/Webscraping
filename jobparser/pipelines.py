@@ -19,9 +19,9 @@ class JobparserPipeline(object):
         collection = self.mongo_db[spider.name]
         collection.insert_one(item)
 
-        db_item = Vacancies(name=item.get('name'), spider=spider.name, url=item.get('url'),
-                            employer=item.get('employer'), salary=item.get('salary'))
-        self.sql_db.add_row(db_item)
+        # db_item = Vacancies(name=item.get('name'), spider=spider.name, url=item.get('url'),
+        #                     employer=item.get('employer'), salary=item.get('salary'))
+        # self.sql_db.add_row(db_item)
         return item
 
 class AvitoPhotosPipelines(ImagesPipeline):
@@ -32,6 +32,22 @@ class AvitoPhotosPipelines(ImagesPipeline):
                     yield scrapy.Request(img)
                 except TypeError:
                     pass
+
+    def item_completed(self, results, item, info):
+        if results:
+            item['photos'] = [itm[1] for itm in results if itm[0]]
+        return item
+
+class FacebookPhotosPipelines(ImagesPipeline):
+    def get_media_requests(self, item, info):
+        if item['photos']:
+            for img in item['photos']:
+                try:
+                    yield scrapy.Request(img)
+                except TypeError:
+                    pass
+        else:
+            pass
 
     def item_completed(self, results, item, info):
         if results:

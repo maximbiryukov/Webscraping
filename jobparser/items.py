@@ -13,6 +13,15 @@ def feature_cleaner(values):
         values[key] = re.sub(r' ','',values[key])
     return values
 
+def fb_friend_cleaner(item):
+    output = ''
+    if re.search('profile.php', item):
+        output += (re.search('(?<=id=)(.*)(?=&fref)', item).group(0))
+    else:
+        output += (re.search('(?<=.com/)(.*)(?=\?)', item).group(0))
+
+    return output
+
 class JobparserItem(scrapy.Item):
     _id = scrapy.Field()
     url = scrapy.Field()
@@ -38,3 +47,9 @@ class AvitoRealEstate(scrapy.Item):
     price = scrapy.Field()
     features = scrapy.Field(input_processor=MapCompose(feature_cleaner))
     photos = scrapy.Field(input_processor=MapCompose(cleaner_photo))
+
+class FacebookItem(scrapy.Item):
+    _id = scrapy.Field()
+    name = scrapy.Field()
+    photos = scrapy.Field()
+    friends = scrapy.Field(input_processor=MapCompose(fb_friend_cleaner))

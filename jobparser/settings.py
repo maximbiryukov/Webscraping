@@ -72,6 +72,7 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'jobparser.pipelines.AvitoPhotosPipelines': 100,
+
    'jobparser.pipelines.JobparserPipeline': 300,
 }
 
