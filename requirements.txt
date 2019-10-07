@@ -1,0 +1,7 @@
+requests
+numpy
+scrapy
+sqlalchemy
+sqlalchemy_utils
+python-dotenv
+selenium
