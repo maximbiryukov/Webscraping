@@ -1,7 +1,7 @@
 
 from pymongo import MongoClient
 import time
-from scrapy.pipelines.images import ImagesPipeline
+# from scrapy.pipelines.images import ImagesPipeline
 
 def find_chain(user_1, user_2):  # проверяет Монго на связи между user_1 и user_2, возвращает
     # строку с цепочкой и глубину (глубина -1: цепочка не найдена)
@@ -62,7 +62,6 @@ class MainPipeline(object):
 
         collection = self.mongo_db[spider.name]
         cursor = collection.find()
-
         if not check_user(cursor, item['username'][0]): # проверяем нет ли такого в базе уже
             collection.insert_one(item) # закидываем в базу
             time.sleep(5)
@@ -75,26 +74,40 @@ class MainPipeline(object):
             if not find_chain(item['search'][0],item['search'][1]):
                 pass
             elif find_chain(item['search'][0],item['search'][1])[0] >= 0:
-                spider.chains.append(find_chain(item['search'][0],item['search'][1]))
+                spider.chain = find_chain(item['search'][0],item['search'][1])
                 spider.queue = []
-                print(spider.ask_for_chains()) # Конец
+                print(spider.ask_for_chains()) # Печатаем tuple с глубиной и цепочкой. Конец.
 
-        # return item
-
-class FacebookPhotosPipelines(ImagesPipeline):
-    def get_media_requests(self, item, info):
-
-        try:
-            if item['photos']:
-                for img in item['photos']:
-                    try:
-                        yield scrapy.Request(img)
-                    except TypeError:
-                        pass
-        except KeyError:
-            pass
-
-    def item_completed(self, results, item, info):
-        if results:
-            item['photos'] = [itm[1] for itm in results if itm[0]]
         return item
+
+# class AvitoPhotosPipelines(ImagesPipeline):
+#     def get_media_requests(self, item, info):
+#         if item['photos']:
+#             for img in item['photos']:
+#                 try:
+#                     yield scrapy.Request(img)
+#                 except TypeError:
+#                     pass
+#
+#     def item_completed(self, results, item, info):
+#         if results:
+#             item['photos'] = [itm[1] for itm in results if itm[0]]
+#         return item
+#
+# class FacebookPhotosPipelines(ImagesPipeline):
+#     def get_media_requests(self, item, info):
+#
+#         try:
+#             if item['photos']:
+#                 for img in item['photos']:
+#                     try:
+#                         yield scrapy.Request(img)
+#                     except TypeError:
+#                         pass
+#         except KeyError:
+#             pass
+#
+#     def item_completed(self, results, item, info):
+#         if results:
+#             item['photos'] = [itm[1] for itm in results if itm[0]]
+#         return item

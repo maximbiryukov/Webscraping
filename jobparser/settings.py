@@ -72,8 +72,8 @@ EXTENSIONS = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'jobparser.pipelines.MainPipeline': 100,
-   'jobparser.pipelines.FacebookPhotosPipelines':200,
-   'jobparser.pipelines.AvitoPhotosPipelines': 300,
+   # 'jobparser.pipelines.FacebookPhotosPipelines':200,
+   # 'jobparser.pipelines.AvitoPhotosPipelines': 300,
 
 }
 

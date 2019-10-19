@@ -55,8 +55,6 @@ def login(LOGIN, PWD, url='https://www.facebook.com/'):
     return chrome_driver
 
 
-
-
 class FacebookSpider(scrapy.Spider):
     name = 'facebook_parser'
     allowed_domains = ['facebook.com']
@@ -67,14 +65,14 @@ class FacebookSpider(scrapy.Spider):
         self.wait = WebDriverWait(self.chrome_driver, 10)
         self.queue = deepcopy(users)
         self.search = deepcopy(users)
-        self.chains = []
+        self.chain = ''
 
     def get_current_friends_list(self):
         return self.chrome_driver.find_elements_by_xpath('//*[contains(@id,"pagelet_timeline_medley_friends")][1]/'
                                                          'div[2]/div/ul/li/div/a')
 
     def ask_for_chains(self):
-        return self.chains
+        return self.chain
 
     def get_friends_list(self):
 
