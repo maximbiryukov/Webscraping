@@ -33,7 +33,6 @@ class JobparserSpiderMiddleware(object):
     def process_spider_output(self, response, result, spider):
         # Called with the results returned from the Spider, after
         # it has processed the response.
-
         # Must return an iterable of Request, dict or Item objects.
         for i in result:
             yield i
@@ -50,7 +49,6 @@ class JobparserSpiderMiddleware(object):
         # Called with the start requests of the spider, and works
         # similarly to the process_spider_output() method, except
         # that it doesn’t have a response associated.
-
         # Must return only requests (not items).
         for r in start_requests:
             yield r
