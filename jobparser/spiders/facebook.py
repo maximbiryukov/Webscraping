@@ -112,8 +112,13 @@ class FacebookSpider(scrapy.Spider):
             try:
                 self.chrome_driver.find_element_by_css_selector(
                     '#u_0_10 > li:nth-child(3) > a').click()  # переходим к списку друзей
+                
             except selenium.common.exceptions.NoSuchElementException:
-                self.chrome_driver.find_element_by_xpath('//*[@id="u_0_z"]/li[3]/a').click()
+                try:
+                    self.chrome_driver.find_element_by_xpath('//*[@id="u_0_z"]/li[3]/a').click()
+
+                except selenium.common.exceptions.NoSuchElementException:
+                    self.chrome_driver.find_element_by_xpath('//*[@id="u_0_y"]/li[3]/a').click()
 
             time.sleep(2)
 
